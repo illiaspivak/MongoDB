@@ -12,6 +12,7 @@ import com.mongodb.MongoClient;
 import org.json.simple.parser.ParseException;
 import sk.kosickaakademia.spivak.hobby.entity.User;
 import sk.kosickaakademia.spivak.hobby.log.Log;
+import sk.kosickaakademia.spivak.hobby.util.Util;
 
 
 import java.util.ArrayList;
@@ -103,6 +104,7 @@ public class Database {
      */
     public String getAllUsers(){
         JSONObject object = new JSONObject();
+        object.put("datetime",new Util().getCurrentTime());
         JSONArray jsonArray = new JSONArray();
 
         database = mongoClient.getDatabase("hobby");
