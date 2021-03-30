@@ -4,13 +4,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sk.kosickaakademia.spivak.hobby.database.Database;
 import sk.kosickaakademia.spivak.hobby.entity.User;
 import sk.kosickaakademia.spivak.hobby.log.Log;
+
+import javax.websocket.server.PathParam;
 
 @RestController
 public class Controller {
@@ -59,5 +58,23 @@ public class Controller {
     public ResponseEntity<String> getAllUsers(){
         String json = new Database().getAllUsers();
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
+    }
+
+    /**
+     * Method DELETE: Deleting information about user
+     * @param login
+     * @return
+     */
+    @DeleteMapping(path = "/user/delete")
+    public ResponseEntity<String> deleteUser(@PathParam("login") String login){
+        if (login == null || login.isEmpty()){
+            log.error("Not enough data");
+            JSONObject objectError = new JSONObject();
+            objectError.put("error", "Not enough data");
+            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(objectError.toJSONString());
+        }
+        Database database = new Database();
+        database.deleteByLogin(login);
+        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body("Information about the user has been deleted");
     }
 }
