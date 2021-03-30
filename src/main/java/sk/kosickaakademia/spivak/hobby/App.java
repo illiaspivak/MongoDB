@@ -15,14 +15,8 @@ public class App
     {
         SpringApplication.run(App.class,args);
         Database database = new Database();
-       // User user = new User("Vladimir", "politics");
-       // database.insertNewUser(user);
 
-        System.out.println(database.getByLogin("Vladimir"));
-
-        List<User> list = database.getUsers();
-        System.out.println(list);
-
+        database.deleteByLogin("Vladimir");
         System.out.println(database.getAllUsers());
     }
 

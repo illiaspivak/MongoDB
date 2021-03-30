@@ -125,6 +125,18 @@ public class Database {
         return object.toJSONString();
     }
 
+    /**
+     * Deleting the user from the database
+     * @param login
+     */
+    public void deleteByLogin(String login){
+        BasicDBObject query = new BasicDBObject();
+
+        query.put("login", login);
+
+        table.remove(query);
+    }
+
 
 
 
