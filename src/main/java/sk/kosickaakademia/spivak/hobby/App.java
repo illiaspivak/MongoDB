@@ -22,6 +22,8 @@ public class App
 
         List<User> list = database.getUsers();
         System.out.println(list);
+
+        System.out.println(database.getAllUsers());
     }
 
 

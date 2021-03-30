@@ -5,6 +5,7 @@ import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import com.mongodb.MongoClient;
@@ -95,6 +96,32 @@ public class Database {
         return list;
     }
 
+
+    /**
+     * Created Json all users
+     * @return Json
+     */
+    public String getAllUsers(){
+        JSONObject object = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+
+        database = mongoClient.getDatabase("hobby");
+        collection = database.getCollection("users");
+        MongoCollection<Document> table = collection;
+        for (Document doc : table.find()){
+            try {
+                JSONObject userJson = new JSONObject();
+                userJson = (JSONObject) new JSONParser().parse(doc.toJson());
+                jsonArray.add(userJson);
+
+            } catch (ParseException e) {
+                log.error(e.toString());
+            }
+        }
+        object.put("users",jsonArray);
+        log.print("Json file created");
+        return object.toJSONString();
+    }
 
 
 
