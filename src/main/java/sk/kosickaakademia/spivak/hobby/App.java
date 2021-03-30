@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import sk.kosickaakademia.spivak.hobby.database.Database;
 import sk.kosickaakademia.spivak.hobby.entity.User;
 
+import java.util.List;
+
 
 @SpringBootApplication
 public class App 
@@ -17,6 +19,9 @@ public class App
        // database.insertNewUser(user);
 
         System.out.println(database.getByLogin("Vladimir"));
+
+        List<User> list = database.getUsers();
+        System.out.println(list);
     }
 
 
