@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,11 @@ import sk.kosickaakademia.spivak.hobby.log.Log;
 public class Controller {
     Log log = new Log();
 
+    /**
+     * Method POST: Adding a new user to the database
+     * @param data
+     * @return status
+     */
     @PostMapping("/user/new")
     public ResponseEntity<String> insertNewUser(@RequestBody String data){
         try {
@@ -42,5 +48,16 @@ public class Controller {
             obj.put("error","Cannot process input data ");
             return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(obj.toJSONString());
         }
+    }
+
+
+    /**
+     * Method GET: Show all users
+     * @return json
+     */
+    @GetMapping("/users")
+    public ResponseEntity<String> getAllUsers(){
+        String json = new Database().getAllUsers();
+        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
     }
 }
