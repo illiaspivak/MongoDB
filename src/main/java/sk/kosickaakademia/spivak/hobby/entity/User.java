@@ -10,6 +10,9 @@ public class User {
         this.hobby = hobby;
     }
 
+    public User() {
+    }
+
 
     public String getLogin() {
         return login;
@@ -26,5 +29,13 @@ public class User {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", hobby='" + hobby + '\'' +
+                '}';
     }
 }

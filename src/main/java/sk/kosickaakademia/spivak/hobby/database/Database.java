@@ -1,10 +1,7 @@
 package sk.kosickaakademia.spivak.hobby.database;
 
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
+import com.mongodb.*;
 import sk.kosickaakademia.spivak.hobby.entity.User;
 import sk.kosickaakademia.spivak.hobby.log.Log;
 
@@ -45,6 +42,22 @@ public class Database {
         table.insert(document);
         log.print("User added to the database");
         return true;
+    }
+
+    public User getByLogin(String login){
+        BasicDBObject query = new BasicDBObject();
+
+        query.put("login", login);
+
+        log.info("Performing a search");
+        DBObject result = table.findOne(query);
+
+
+        User user = new User();
+        user.setLogin(String.valueOf(result.get("login")));
+        user.setHobby(String.valueOf(result.get("hobby")));
+
+        return user;
     }
 
 

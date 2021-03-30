@@ -13,7 +13,11 @@ public class App
     {
         SpringApplication.run(App.class,args);
         Database database = new Database();
-        User user = new User("Vladimir", "politics");
-        database.insertNewUser(user);
+       // User user = new User("Vladimir", "politics");
+       // database.insertNewUser(user);
+
+        System.out.println(database.getByLogin("Vladimir"));
     }
+
+
 }
