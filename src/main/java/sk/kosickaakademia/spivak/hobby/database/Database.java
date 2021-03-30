@@ -1,13 +1,13 @@
 package sk.kosickaakademia.spivak.hobby.database;
 
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
+import sk.kosickaakademia.spivak.hobby.entity.User;
 import sk.kosickaakademia.spivak.hobby.log.Log;
 
-import java.net.UnknownHostException;
 
 /**
  * Connecting to the MongoDB
@@ -18,11 +18,34 @@ public class Database {
     // this is the client that will provide a connection to the database
     private static final MongoClient mongoClient = new MongoClient();
 
-    //create database
-    private static MongoDatabase database;
+    private DB db;
+    private DBCollection table;
 
-    //create collection
-    private static MongoCollection<Document> collection;
+    public Database(){
+        log.info("Connecting to the database");
+        //Create database and collection
+        db = mongoClient.getDB("hobby");
+        table = db.getCollection("users");
+    }
+
+    /**
+     * Add the user to the database
+     * @param user
+     */
+    public boolean insertNewUser(User user){
+        if (user==null){
+            log.error("Not enough data");
+            return false;
+        }
+        BasicDBObject document = new BasicDBObject();
+
+        document.put("login", user.getLogin());
+        document.put("hobby",user.getHobby());
+
+        table.insert(document);
+        log.print("User added to the database");
+        return true;
+    }
 
 
 
